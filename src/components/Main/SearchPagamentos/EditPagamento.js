@@ -208,7 +208,7 @@ const EditPagamento = (props) => {
               Nome da máquina
             </label>
             <Input
-              placeholder={"Nome da máquina"}
+              placeholder={""}
               value={data.nome}
               id="nome"
               type="text"
