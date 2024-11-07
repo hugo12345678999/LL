@@ -73,7 +73,7 @@ useEffect(() => {
       loja: descricao,                    // Renomeia `descricao` para `loja`
       status: 
         status === "OFFLINE" ? "Inativa" : 
-        status === "PAGAMENTO_RECENTE" ? "Recente" : "Ativa",  // Condição para o status
+        status === "PAGAMENTO_RECENTE" ? "PAGAMENTO_RECENTE" : "Ativa",  // Condição para o status
       atividadeOntem: "-",                // Adiciona `atividadeOntem` com valor padrão "-"
       ...rest                             // Mantém todas as outras propriedades
     })
@@ -141,7 +141,7 @@ useEffect(() => {
           if (value === "Inativa") {
             color = "#FEF0F4";
             textColor = "#D50B3E";
-          } else if (value === "Recente") {
+          } else if (value === "PAGAMENTO_RECENTE") {
             color = "#E6F7FF";
             textColor = "#1890FF";
           } else {
