@@ -64,24 +64,21 @@ export default function Maquinas() {
       });
   };
 
-useEffect(() => {
-  const maquinasAdaptadas = maquinas?.map(
-    ({ nome, store_id, descricao, status, maquininha_serial, ...rest }) => ({
-      nomeMaquina: nome,                  // Renomeia `nome` para `nomeMaquina`
-      mercadoPagoId: store_id,            // Renomeia `store_id` para `mercadoPagoId`
-      idPseg: maquininha_serial ?? "-",    // Usa `maquininha_serial` ou "-" se for `null` ou `undefined`
-      loja: descricao,                    // Renomeia `descricao` para `loja`
-      status: 
-        status === "OFFLINE" ? "Inativa" : 
-        status === "PAGAMENTO_RECENTE" ? "Recente" : "Ativa",  // Condição para o status
-      atividadeOntem: "-",                // Adiciona `atividadeOntem` com valor padrão "-"
-      ...rest                             // Mantém todas as outras propriedades
-    })
-  );
+  useEffect(() => {
+    const maquinasAdaptadas = maquinas?.map(
+      ({ nome, store_id, descricao, status, maquininha_serial, ...rest }) => ({
+        nomeMaquina: nome,
+        mercadoPagoId: store_id,
+        idPseg: maquininha_serial ?? "-",
+        loja: descricao,
+        status: status === "OFFLINE" ? "Inativa" : "Ativa",
+        atividadeOntem: "-",
+        ...rest,
+      })
+    );
 
-  setRows(maquinasAdaptadas);             // Atualiza o estado `rows` com as máquinas adaptadas
-}, [maquinas]);
-
+    setRows(maquinasAdaptadas);
+  }, [maquinas]);
 
   const handleMaquinaClick = (maquina) => {
     const {
@@ -131,36 +128,24 @@ useEffect(() => {
       dataIndex: "loja",
       key: "loja",
     },
- 
-      {
-        title: "Status",
-        dataIndex: "status",
-        key: "status",
-        render: (value) => {
-          let color, textColor;
-          if (value === "Inativa") {
-            color = "#FEF0F4";
-            textColor = "#D50B3E";
-          } else if (value === "Recente") {
-            color = "#E6F7FF";
-            textColor = "#1890FF";
-          } else {
-            color = "#EEFBF4";
-            textColor = "#17663A";
-          }
-          return (
-            <Tag
-              color={color}
-              style={{
-                borderRadius: "8px",
-                color: textColor,
-              }}
-            >
-              {value}
-            </Tag>
-          );
-        },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      render: (value) => {
+        return (
+          <Tag
+            color={value === "Inativa" ? "#FEF0F4" : "#EEFBF4"}
+            style={{
+              borderRadius: "8px",
+              color: value === "Inativa" ? "#D50B3E" : "#17663A",
+            }}
+          >
+            {value}
+          </Tag>
+        );
       },
+    },
     {
       title: "Atividade ontem",
       dataIndex: "atividadeOntem",
@@ -286,24 +271,13 @@ useEffect(() => {
                       gap: "10px",
                     }}
                   >
-                   <Tag
-  color={
-    status === "OFFLINE" 
-      ? "#FEF0F4" 
-      : status === "PAGAMENTOS_RECENTES" 
-        ? "#E0F3FF"  // cor de fundo azul
-        : "#EEFBF4"
-  }
-  style={{
-    borderRadius: "8px",
-    color: status === "OFFLINE" 
-      ? "#D50B3E" 
-      : status === "PAGAMENTOS_RECENTES" 
-        ? "#0077B6"  // cor de texto azul escuro
-        : "#17663A",
-  }}
->
-
+                    <Tag
+                      color={status === "OFFLINE" ? "#FEF0F4" : "#EEFBF4"}
+                      style={{
+                        borderRadius: "8px",
+                        color: status === "OFFLINE" ? "#D50B3E" : "#17663A",
+                      }}
+                    >
                       {status === "OFFLINE" ? "Inativa" : "Ativa"}
                     </Tag>
                     <div>
